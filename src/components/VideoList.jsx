@@ -1,8 +1,9 @@
 var VideoList = (props) => (
   <div className="video-list media">
-    {props.videos.map( video => {
-      return <VideoListEntry video = {video} onListClick={props.onListClick} />
-    })}
+    { console.log("props videos currently: ", props.videos);
+      props.videos ? props.videos.map( video => {
+      return <VideoListEntry video = {video} onListClick={props.onListClick} key={video.etag} />
+    }) : "NO VIDEOS WHAT!?"}
   </div>
 );
 

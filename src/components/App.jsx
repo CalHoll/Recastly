@@ -1,15 +1,15 @@
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      currentVideo: window.fakeVideoData[0],
-      videos: window.fakeVideoData,
+      currentVideo: props.searchYouTube[0],
+      videos: props.searchYouTube,
     }
   }
 
   handleListClick (video) {
     this.setState({
-      currentVideo: video     // removed curlys
+      currentVideo: video
     });
   }
 
@@ -31,5 +31,3 @@ class App extends React.Component {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
-
-// ReactDOM.render(<App />, document.getElementById('app'));
