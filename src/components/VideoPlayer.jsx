@@ -1,5 +1,5 @@
 var VideoPlayer = ({video}) => (
-  !video ? <div className="video-player">Please wait...</div> :
+  !video.id ? <div className="video-player">Please wait...</div> :
   <div className="video-player">
     <div className="embed-responsive embed-responsive-16by9">
       <iframe
