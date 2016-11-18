@@ -1,28 +1,37 @@
-var searchYouTube = (options, callback) => {
+var searchYouTube = ({key, query, max = 5}, callback) => {
 
-  var defaults = {
-    key: options.key,
-    q: options.query,
-    maxResults: options.max || 5,
-    videoEmbedabble: true,
+  $.get('https://www.googleapis.com/youtube/v3/search', {
     part: 'snippet',
+    key: key,
+    q: query,
+    maxResults: max,
     type: 'video',
-  }
-
-  $.ajax({
-    url: "https://www.googleapis.com/youtube/v3/search",
-    type: 'GET',
-    data: defaults,
-    dataType: 'json',
-    contentType: 'application/json',
-    success: function(data) {
-      callback(data.items);
-    },
-    error: function(data) {
-      throw new Error("FAILED!", data);
+    videoEmbeddable: 'true'
+  })
+  .done(({items}) => {
+    if (callback) {
+      callback(items);
     }
   })
-
+  .fail(({responseJSON}) => {
+    responseJSON.error.errors.forEach((err) =>
+      console.error(err)
+    );
+  });
 };
+
+  // $.ajax({
+  //   url: "https://www.googleapis.com/youtube/v3/search",
+  //   type: 'GET',
+  //   data: defaults,
+  //   dataType: 'json',           // left out these lines?
+  //   contentType: 'application/json',
+  //   success: function(data) {
+  //     callback(data.items);
+  //   },
+  //   error: function(data) {
+  //     throw new Error("FAILED!", data);
+  //   }
+  // })
 
 window.searchYouTube = searchYouTube;

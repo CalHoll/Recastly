@@ -2,26 +2,50 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentVideo: props.searchYouTube[0],
-      videos: props.searchYouTube,
+      currentVideo: null,
+      videos: []
     }
+  }
+
+  componentDidMount() {
+    this.getYouTubeVideos('puppies');
+  }
+
+  getYouTubeVideos(query) {
+    var options = {
+      key: this.props.API_KEY,
+      query: query
+    };
+    this.props.searchYouTube(options, (videos) =>
+      this.setState({
+        currentVideo: videos[0],
+        videos: videos,
+      })
+    )
   }
 
   handleListClick (video) {
     this.setState({
       currentVideo: video
-    });
+    })
   }
 
   render() {
     return (
       <div>
-        <Nav />
+        <Nav
+          handleSearchInputChange={this.getYouTubeVideos.bind(this)}
+        />
         <div className="col-md-7">
-          <VideoPlayer video = {this.state.currentVideo} />
+          <VideoPlayer
+            video = {this.state.currentVideo}
+          />
         </div>
         <div className="col-md-5">
-          <VideoList videos = {this.state.videos} onListClick = {this.handleListClick.bind(this)}/>
+          <VideoList
+            videos = {this.state.videos}
+            onListClick = {this.handleListClick.bind(this)}
+          />
         </div>
       </div>
     );

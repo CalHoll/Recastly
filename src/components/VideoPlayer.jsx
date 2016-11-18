@@ -1,11 +1,17 @@
-var VideoPlayer = (props) => (
+var VideoPlayer = ({video}) => (
+  !video ? <div className="video-player">Please wait...</div> :
   <div className="video-player">
     <div className="embed-responsive embed-responsive-16by9">
-      <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + (props.video ?  props.video.id.videoId : "")} allowFullScreen></iframe>
+      <iframe
+        className="embed-responsive-item"
+        src={`https://www.youtube.com/embed/${video.id.videoId}`}
+        allowFullScreen
+      >
+    </iframe>
     </div>
     <div className="video-player-details">
-      <h3>{props.video ? props.video.snippet.title : "NO VIDEO"}</h3>
-      <div>{props.video ? props.video.snippet.description : "WHERE IS THE VIDEO?!?!"}</div>
+      <h3>{video.snippet.title}</h3>
+      <div>{video.snippet.description}</div>
     </div>
   </div>
 );
@@ -19,3 +25,6 @@ VideoPlayer.propTypes = {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 window.VideoPlayer = VideoPlayer;
+
+
+// <object style="width:100%;height:100%;width: 820px; height: 461.25px; float: none; clear: both; margin: 2px auto;" data="http://www.youtube.com/embed/14ZEmOu07Hg"></object>
